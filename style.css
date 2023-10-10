@@ -94,3 +94,12 @@ input[type=number] {
 #editBtn {
     background-color: white !important;
 }
+
+
+.toast-container {
+    background-color: #F5F5F5;
+}
+
+#closeBtn {
+    background-color:#3FC1C9 !important;
+}

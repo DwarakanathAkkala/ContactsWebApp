@@ -90,7 +90,7 @@ container.innerHTML = `
         </div>
         <div class="d-grid gap-2 mb-3 d-md-flex mt-2 justify-content-md-center">
             <button class="btn btn-warning" id="deleteBtn" type="reset" onclick=deleteContact(number) data-bs-dismiss="toast">Delete</button>
-            <button type="btn btn-primary" class="btn btn-secondary btn-sm" data-bs-dismiss="toast">Close</button>
+            <button type="btn btn-primary" id="closeBtn" class="btn btn-secondary btn-sm" data-bs-dismiss="toast">Close</button>
         </div>
       </div>
     </div>
