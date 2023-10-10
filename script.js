@@ -1,4 +1,4 @@
-var container = document.createElement("div");
+let container = document.createElement("div");
 container.setAttribute("class", "container");
 container.innerHTML = `
     <h1 id="title" class="text-center">Contacts Web App</h1>
@@ -100,7 +100,7 @@ container.innerHTML = `
 // Add Created DOM to HTML
 document.body.append(container);
 
-var contactEntries = document.getElementById("contactEntries");
+let contactEntries = document.getElementById("contactEntries");
 
 window.onload = (event) => {
     document.getElementById("tableContainer").style.display = "block";
@@ -117,8 +117,8 @@ function formSubmit() {
     contactForm.classList.add("was-validated");
 
     // Create Bootstrap Toast Trigger
-    var invalidElement = document.getElementById("invalidToast");
-    var invalidToast = new bootstrap.Toast(invalidElement, {
+    let invalidElement = document.getElementById("invalidToast");
+    let invalidToast = new bootstrap.Toast(invalidElement, {
         delay: 3000
     });
 
@@ -138,8 +138,8 @@ function formSubmit() {
         document.getElementById("tableContainer").style.display = "block";
 
         addData(formDataObj); // Add Form data to Table
-        var validElement = document.getElementById("validToast");
-        var validToast = new bootstrap.Toast(validElement, {
+        let validElement = document.getElementById("validToast");
+        let validToast = new bootstrap.Toast(validElement, {
             delay: 3000
         });
         validToast.show(); // Activate Valid Toast (Success Message)
@@ -177,13 +177,13 @@ function editContact() {
     console.log("Edit Function");
 }
 
-// Created a variable to pass between two functions
-var numberToBeDeleted;
+// Created a letiable to pass between two functions
+let numberToBeDeleted;
 
 function deleteContactAlert(value) {
     console.log('Value', value);
-    var deleteElement = document.getElementById("deleteToast");
-    var deleteToast = new bootstrap.Toast(deleteElement, {
+    let deleteElement = document.getElementById("deleteToast");
+    let deleteToast = new bootstrap.Toast(deleteElement, {
         delay: 10000
     });
     deleteToast.show();
