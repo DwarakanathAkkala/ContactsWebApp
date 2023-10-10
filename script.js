@@ -37,7 +37,7 @@ container.innerHTML = `
         </div>
     </div>
 
-    <h1>Survey Data</h1>
+    <h1>Contacts Data</h1>
     <h6 id="tableDescription">Please submit an entry to get the table data.</h6>
     <div class="table-responsive-lg" id="tableContainer">
         <table class="table table-hover">
@@ -48,7 +48,7 @@ container.innerHTML = `
                     <th>Options</th>
                 </tr>
             </thead>
-            <tbody id="surveyEntries">
+            <tbody id="contactEntries">
 
             </tbody>
         </table>
@@ -100,7 +100,7 @@ container.innerHTML = `
 // Add Created DOM to HTML
 document.body.append(container);
 
-var surveyEntries = document.getElementById("surveyEntries");
+var contactEntries = document.getElementById("contactEntries");
 
 window.onload = (event) => {
     document.getElementById("tableContainer").style.display = "block";
@@ -122,7 +122,7 @@ function formSubmit() {
         delay: 3000
     });
 
-    // Get Survey Form Input Data    
+    // Get Contact Form Input Data    
     const formData = new FormData(contactForm);
     const formDataObj = Object.fromEntries(formData.entries());
 
@@ -162,7 +162,7 @@ const getData = () => {
     for (let i = 0; i < localStorage.length; i++) {
         let number = localStorage.key(i);
         let name = localStorage.getItem(number);
-        surveyEntries.innerHTML += `
+        contactEntries.innerHTML += `
         <tr>
             <td>${name}</td>
             <td>${number}</td>
@@ -177,6 +177,7 @@ function editContact() {
     console.log("Edit Function");
 }
 
+// Created a variable to pass between two functions
 var numberToBeDeleted;
 
 function deleteContactAlert(value) {
@@ -193,8 +194,7 @@ function deleteContactAlert(value) {
 
 function deleteContact() {
     window.localStorage.removeItem(numberToBeDeleted);
-    //getData();
-    location.reload();
+    location.reload(); // Reloading to get the updated Data after Deletion.
 }
 
 function reset() {
