@@ -94,6 +94,20 @@ container.innerHTML = `
         </div>
       </div>
     </div>
+
+
+    <!--Contact Successful Delete Toast-->
+    <div class="toast-container position-fixed top-50 start-50 translate-middle" style="z-index: 11">
+      <div id="deleteToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+          <strong class="me-auto">Contact deleted Successfully</strong>
+          <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body bg-success text-white">
+          You have lost a friend :-(
+        </div>
+      </div>
+    </div>
 `;
 
 
@@ -195,6 +209,7 @@ function deleteContactAlert(value) {
 function deleteContact() {
     window.localStorage.removeItem(numberToBeDeleted);
     location.reload(); // Reloading to get the updated Data after Deletion.
+
 }
 
 function reset() {
