@@ -1,0 +1,96 @@
+
+
+/* Backgrounds */
+body {
+    background-color: #364F6B;
+}
+
+.card {
+    margin: 5%;
+    background-color: #3FC1C9;
+}
+
+p, label {
+    color: #F5F5F5;
+}
+
+table {
+    background-color: white;
+}
+
+/* Headings */
+h1 {
+    color: #FC5185;
+    text-align: center;
+    margin-top: 10%;
+    margin-bottom: 30px;
+    font-family: headerFont;
+}
+
+.form-header{color: white;}
+
+#tableDescription {
+    color: white;
+    text-align: center;
+    margin-bottom: 10%;
+}
+
+button {
+    background-color: #FC5185 !important;
+}
+
+#reset:hover {
+    background-color: red !important;
+}
+
+#submit:hover {
+    background-color: lightgreen !important;
+}
+
+/* Validations */
+.invalid-feedback{
+    color: black;
+}
+
+.invalid-checkbox {
+    color: black;
+    display: none;
+}
+
+.form-check-input:valid~.form-check-label{
+    color: white !important;
+}
+
+.was-validated  {
+    color: black;
+}
+
+/* Table CSS */
+#tableContainer {
+    display: none;
+    margin: 0 10% 5% 5%;
+}
+
+tbody tr {
+    background-color: #769FCD;
+}
+
+tr:nth-child(even) {
+    background-color: #B9D7EA;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+#editBtn {
+    background-color: white !important;
+}
