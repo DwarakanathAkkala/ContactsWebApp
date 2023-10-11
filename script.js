@@ -83,7 +83,7 @@ container.innerHTML = `
 
     <!--Delete Alert Toast-->
     <div class="toast-container position-fixed top-50 start-50 translate-middle" style="z-index: 11">
-      <div id="deleteToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
+      <div id="deleteToastAlert" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
         <div class="toast-header">
           <strong class="me-auto">This will delete your valuable contact :-)</strong>
           <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
@@ -202,12 +202,11 @@ function editContact() {
 let numberToBeDeleted;
 
 function deleteContactAlert(value) {
-  console.log('Value', value);
-  let deleteElement = document.getElementById("deleteToast");
-  let deleteToast = new bootstrap.Toast(deleteElement, {
+  let deleteAlertElement = document.getElementById("deleteToastAlert");
+  let deleteToastAlert = new bootstrap.Toast(deleteAlertElement, {
     delay: 10000
   });
-  deleteToast.show();
+  deleteToastAlert.show();
 
   numberToBeDeleted = value;
 }
@@ -217,6 +216,12 @@ function deleteContact() {
   window.localStorage.removeItem(numberToBeDeleted);
   location.reload(); // Reloading to get the updated Data after Deletion.
 
+  // Successful Delete Alert
+  let deleteElement = document.getElementById("deleteToast");
+  let deleteToastAlert = new bootstrap.Toast(deleteElement, {
+    delay: 10000
+  });
+  deleteToast.show();
 }
 
 function reset() {
