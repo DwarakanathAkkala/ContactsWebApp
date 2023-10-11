@@ -104,7 +104,7 @@ container.innerHTML = `
           <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
         </div>
         <div class="toast-body bg-success text-white">
-          You have lost a friend :-(
+          You have lost a friend. Updating contacts Shortly....
         </div>
       </div>
     </div>
@@ -125,8 +125,6 @@ window.onload = (event) => {
 const contactForm = document.getElementById("form");
 
 function formSubmit() {
-
-
   // Activate Bootstrap Validations
   contactForm.classList.add("was-validated");
 
@@ -142,7 +140,6 @@ function formSubmit() {
 
   // Check for invalid form Values
   if (!contactForm.checkValidity()) {
-    document.getElementById("checkboxOptions").style.display = "none";
     invalidToast.show(); // Activate Invalid Toast (Error Message)
     return;
   }
@@ -168,7 +165,7 @@ function formSubmit() {
 // Function for adding Contact Form Data to Table
 const addData = ((dataObj) => {
   console.log(dataObj);
-  window.localStorage.setItem(dataObj.name, dataObj.number);
+  window.localStorage.setItem(dataObj.number, dataObj.name);
   contactEntries.innerHTML += `
     <tr>
       <td>${dataObj.name}</td>
@@ -180,16 +177,18 @@ const addData = ((dataObj) => {
 
 // Function to get data from Local Storage
 const getData = () => {
+
   for (let i = 0; i < localStorage.length; i++) {
     let number = localStorage.key(i);
     let name = localStorage.getItem(number);
     contactEntries.innerHTML += `
       <tr>
         <td>${name}</td>
-          <td>${number}</td>
-          <td><button class="btn" id="editBtn" onClick="editContact()"><i class="fa fa-pencil-square" aria-hidden="true"></i></button> &nbsp; &nbsp;
-          <button class="btn" id="deleteBtn" onClick="deleteContactAlert('${number}')"><i class="fa fa-trash" aria-hidden="true"></i></button></td>
-      </tr>`;
+        <td>${number}</td>
+        <td><button class="btn" id="editBtn" onClick="editContact()"><i class="fa fa-pencil-square" aria-hidden="true"></i></button> &nbsp; &nbsp;
+        <button class="btn" id="deleteBtn" onClick="deleteContactAlert('${number}')"><i class="fa fa-trash" aria-hidden="true"></i></button></td>
+      </tr>
+    `;
   }
 }
 
@@ -198,7 +197,7 @@ function editContact() {
   console.log("Edit Function");
 }
 
-// Created a letiable to pass between two functions
+// Created a variable to pass between two functions
 let numberToBeDeleted;
 
 function deleteContactAlert(value) {
@@ -215,14 +214,19 @@ function deleteContactAlert(value) {
 function deleteContact() {
   window.localStorage.removeItem(numberToBeDeleted);
 
-  getData(); // Update the entries after deletion.
-
   // Successful Delete Alert
   let deleteElement = document.getElementById("deleteToast");
   let deleteToast = new bootstrap.Toast(deleteElement, {
     delay: 3000
   });
   deleteToast.show();
+
+  // Reload Page to get the updated data after deletion
+  setTimeout(function () {
+    location.reload();
+    console.log("Reload")
+  }, 4000);
+
 }
 
 function reset() {
