@@ -214,11 +214,12 @@ function deleteContactAlert(value) {
 
 function deleteContact() {
   window.localStorage.removeItem(numberToBeDeleted);
-  location.reload(); // Reloading to get the updated Data after Deletion.
+
+  getData(); // Update the entries after deletion.
 
   // Successful Delete Alert
   let deleteElement = document.getElementById("deleteToast");
-  let deleteToastAlert = new bootstrap.Toast(deleteElement, {
+  let deleteToast = new bootstrap.Toast(deleteElement, {
     delay: 10000
   });
   deleteToast.show();
