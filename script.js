@@ -220,7 +220,7 @@ function deleteContact() {
   // Successful Delete Alert
   let deleteElement = document.getElementById("deleteToast");
   let deleteToast = new bootstrap.Toast(deleteElement, {
-    delay: 10000
+    delay: 3000
   });
   deleteToast.show();
 }
