@@ -104,7 +104,7 @@ container.innerHTML = `
           <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
         </div>
         <div class="toast-body bg-success text-white">
-          You have lost a friend. Updating contacts Shortly....
+          You have lost a friend :-(
         </div>
       </div>
     </div>
@@ -116,10 +116,12 @@ document.body.append(container);
 
 let contactEntries = document.getElementById("contactEntries");
 
-window.onload = (event) => {
+window.onload = () => {
   document.getElementById("tableContainer").style.display = "block";
-  getData();
+  getLocalStorageData();
 };
+
+let allContacts = [];
 
 // Target Form Element
 const contactForm = document.getElementById("form");
@@ -131,7 +133,7 @@ function formSubmit() {
   // Create Bootstrap Toast Trigger
   let invalidElement = document.getElementById("invalidToast");
   let invalidToast = new bootstrap.Toast(invalidElement, {
-    delay: 3000
+    delay: 1000
   });
 
   // Get Contact Form Input Data    
@@ -152,7 +154,7 @@ function formSubmit() {
 
     let validElement = document.getElementById("validToast");
     let validToast = new bootstrap.Toast(validElement, {
-      delay: 3000
+      delay: 1000
     });
     validToast.show(); // Activate Valid Toast (Success Message)
     contactForm.reset(); // Reset Form
@@ -164,40 +166,30 @@ function formSubmit() {
 
 // Function for adding Contact Form Data to Table
 const addData = ((dataObj) => {
-  console.log(dataObj);
-  window.localStorage.setItem(dataObj.number, dataObj.name);
-  contactEntries.innerHTML += `
-    <tr>
-      <td>${dataObj.name}</td>
-      <td>${dataObj.number}</td>
-      <td><button class="btn" id="editBtn" onClick="editContact()"><i class="fa fa-pencil-square" aria-hidden="true"></i></button> &nbsp; &nbsp;
-      <button class="btn" id="deleteBtn" onClick="deleteContactAlert('${number}')"><i class="fa fa-trash" aria-hidden="true"></i></button></td>
-    </tr>`;
+  window.localStorage.setItem(dataObj.number, dataObj.name);  // Save Contact in Local Storage
+  allContacts.push(dataObj); // Update object
+  contactEntries.innerHTML = ``; // Reset Table DOM
+  loadTable(allContacts); // Display Data with updated values
 });
 
-// Function to get data from Local Storage
-const getData = () => {
-
-  for (let i = 0; i < localStorage.length; i++) {
-    let number = localStorage.key(i);
-    let name = localStorage.getItem(number);
+// Load Table
+function loadTable(data) {
+  for (let i = 0; i < data.length; i++) {
     contactEntries.innerHTML += `
-      <tr>
-        <td>${name}</td>
-        <td>${number}</td>
-        <td><button class="btn" id="editBtn" onClick="editContact()"><i class="fa fa-pencil-square" aria-hidden="true"></i></button> &nbsp; &nbsp;
-        <button class="btn" id="deleteBtn" onClick="deleteContactAlert('${number}')"><i class="fa fa-trash" aria-hidden="true"></i></button></td>
-      </tr>
-    `;
+    <tr>
+      <td>${data[i].name}</td>
+      <td>${data[i].number}</td>
+      <td><button class="btn" id="editBtn" onClick="editContact()"><i class="fa fa-pencil-square" aria-hidden="true"></i></button> &nbsp; &nbsp;
+      <button class="btn" id="deleteBtn" onClick="deleteContactAlert('${data[i].number}')"><i class="fa fa-trash" aria-hidden="true"></i></button></td>
+    </tr>`;
   }
 }
-
 
 function editContact() {
   console.log("Edit Function");
 }
 
-// Created a variable to pass between two functions
+// Created a letiable to pass between two functions
 let numberToBeDeleted;
 
 function deleteContactAlert(value) {
@@ -208,11 +200,15 @@ function deleteContactAlert(value) {
   deleteToastAlert.show();
 
   numberToBeDeleted = value;
+  console.log(numberToBeDeleted)
 }
 
 
 function deleteContact() {
   window.localStorage.removeItem(numberToBeDeleted);
+  console.log("No. to be deleted", numberToBeDeleted);
+  contactEntries.innerHTML = ``;
+  getLocalStorageData(); // Update the entries after deletion.
 
   // Successful Delete Alert
   let deleteElement = document.getElementById("deleteToast");
@@ -220,15 +216,22 @@ function deleteContact() {
     delay: 3000
   });
   deleteToast.show();
-
-  // Reload Page to get the updated data after deletion
-  setTimeout(function () {
-    location.reload();
-    console.log("Reload")
-  }, 4000);
-
 }
 
 function reset() {
   contactForm.reset();
+}
+
+function getLocalStorageData() {
+  allContacts = [];
+
+  for (let i = 0; i < localStorage.length; i++) {
+    let tempArr = []; // Using tempArr array to get the data stored in local storage
+    tempArr.number = localStorage.key(i);
+    tempArr.name = localStorage.getItem(tempArr.number);
+
+    allContacts.push(tempArr); // Push the contacts retrieved from Local Storage to allContacts varialble
+  }
+
+  loadTable(allContacts); // Display Data
 }
