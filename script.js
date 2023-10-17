@@ -108,6 +108,19 @@ container.innerHTML = `
         </div>
       </div>
     </div>
+
+    <!--Duplicate Contact Toast-->
+    <div class="toast-container position-fixed top-50 start-50 translate-middle" style="z-index: 11">
+      <div id="duplicateContactToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+          <strong class="me-auto">Oops... Duplicate Contact</strong>
+          <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body bg-success text-white">
+          Please check the contacts
+        </div>
+      </div>
+    </div>
 `;
 
 
@@ -150,6 +163,20 @@ function formSubmit() {
   else {
     document.getElementById("tableContainer").style.display = "block";
 
+    // Check for Duplicate Contacts
+    for (let i = 0; i < allContacts.length; i++) {
+      if (formDataObj.name === allContacts[i].name || formDataObj.number === allContacts[i].number) {
+
+        // Duplicate Contact Alert
+        let duplicateContactElement = document.getElementById("duplicateContactToast");
+        let duplicateContactToast = new bootstrap.Toast(duplicateContactElement, {
+          delay: 1000
+        });
+        duplicateContactToast.show();
+
+        return;
+      }
+    }
     addData(formDataObj); // Add Form data to Table
 
     let validElement = document.getElementById("validToast");
