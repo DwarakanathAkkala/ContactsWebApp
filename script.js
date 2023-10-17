@@ -227,13 +227,11 @@ function deleteContactAlert(value) {
   deleteToastAlert.show();
 
   numberToBeDeleted = value;
-  console.log(numberToBeDeleted)
 }
 
 
 function deleteContact() {
   window.localStorage.removeItem(numberToBeDeleted);
-  console.log("No. to be deleted", numberToBeDeleted);
   contactEntries.innerHTML = ``;
   getLocalStorageData(); // Update the entries after deletion.
 
