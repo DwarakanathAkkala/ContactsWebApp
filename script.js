@@ -6,7 +6,7 @@ container.innerHTML = `
     
     <div class="card">
         <div class="card-body">
-            <form id="form" class="mb-4 row" novalidate>
+            <form id="createContactForm" class="mb-4 row" novalidate>
                 <h1 class="form-header">Create Contact</h1>
                 <div class="mb-3 row">
                     <div class="col-md-12 form-group">
@@ -121,6 +121,42 @@ container.innerHTML = `
         </div>
       </div>
     </div>
+
+    <!-- Edit Contact Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">Edit Contact</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form id="editContactForm" class="row" novalidate>
+              <div class="row">
+                <div class="col-md-12 form-group">
+                  <label for="name" class="mb-2">Name</label>
+                  <input id="name" class="form-control" name="name" type="text" required placeholder="Enter Name" required>
+                  <div class="invalid-feedback">Please Enter Valid Name</div>
+                </div>
+              </div>
+
+              <div class="mb-4 row">
+                  <div class="col-md-12 form-group">
+                      <label for="number" class="mb-2 form-check-label">Contact Number</label>
+                      <input id="number" class="form-control" name="number" type="number" placeholder="Enter Contact Number" required>
+                      <div class="invalid-feedback">Please Enter Valid Contact Number</div>
+                  </div>
+              </div>
+
+            </form>
+          </div>
+          
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" onClick="editContact()" >Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
 `;
 
 
@@ -137,7 +173,7 @@ window.onload = () => {
 let allContacts = [];
 
 // Target Form Element
-const contactForm = document.getElementById("form");
+const contactForm = document.getElementById("createContactForm");
 
 function formSubmit() {
   // Activate Bootstrap Validations
@@ -164,29 +200,21 @@ function formSubmit() {
     document.getElementById("tableContainer").style.display = "block";
 
     // Check for Duplicate Contacts
-    for (let i = 0; i < allContacts.length; i++) {
-      if (formDataObj.name === allContacts[i].name || formDataObj.number === allContacts[i].number) {
+    duplicateContactCheck(formDataObj);
 
-        // Duplicate Contact Alert
-        let duplicateContactElement = document.getElementById("duplicateContactToast");
-        let duplicateContactToast = new bootstrap.Toast(duplicateContactElement, {
-          delay: 1000
-        });
-        duplicateContactToast.show();
+    if (duplicateContactCheck(formDataObj) == false) {
 
-        return;
-      }
+      addData(formDataObj);
+
+      let validElement = document.getElementById("validToast");
+      let validToast = new bootstrap.Toast(validElement, {
+        delay: 1000
+      });
+      validToast.show(); // Activate Valid Toast (Success Message)
+      contactForm.reset(); // Reset Form
+      contactForm.classList.remove("was-validated"); // Remove Bootstrap Validation CSS
+      document.getElementById("tableContainer").scrollIntoView(); // Move to Table
     }
-    addData(formDataObj); // Add Form data to Table
-
-    let validElement = document.getElementById("validToast");
-    let validToast = new bootstrap.Toast(validElement, {
-      delay: 1000
-    });
-    validToast.show(); // Activate Valid Toast (Success Message)
-    contactForm.reset(); // Reset Form
-    contactForm.classList.remove("was-validated"); // Remove Bootstrap Validation CSS
-    document.getElementById("tableContainer").scrollIntoView(); // Move to Table
   }
 };
 
@@ -206,14 +234,42 @@ function loadTable(data) {
     <tr>
       <td>${data[i].name}</td>
       <td>${data[i].number}</td>
-      <td><button class="btn" id="editBtn" onClick="editContact()"><i class="fa fa-pencil-square" aria-hidden="true"></i></button> &nbsp; &nbsp;
+      <td><button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        <i class="fa fa-pencil-square" aria-hidden="true"></i>
+      </button> &nbsp; &nbsp;
       <button class="btn" id="deleteBtn" onClick="deleteContactAlert('${data[i].number}')"><i class="fa fa-trash" aria-hidden="true"></i></button></td>
     </tr>`;
   }
 }
 
 function editContact() {
-  console.log("Edit Function");
+
+  // Target Form Element
+  const editContactForm = document.getElementById("editContactForm");
+
+  // Activate Bootstrap Validations
+  editContactForm.classList.add("was-validated");
+
+  // Get Contact Form Input Data    
+  const editContactFormData = new FormData(editContactForm);
+  const editContactFormDataObj = Object.fromEntries(editContactFormData.entries());
+
+  // Create Bootstrap Toast Trigger
+  let invalidElement = document.getElementById("invalidToast");
+  let invalidToast = new bootstrap.Toast(invalidElement, {
+    delay: 500
+  });
+
+  // Duplicate Contact Check
+  if (!editContactForm.checkValidity()) {
+    invalidToast.show(); // Activate Invalid Toast (Error Message)
+    return;
+  }
+
+  else if (duplicateContactCheck(editContactFormDataObj) == false) {
+    console.log("Edit Function");
+  };
+
 }
 
 // Created a letiable to pass between two functions
@@ -245,6 +301,23 @@ function deleteContact() {
 
 function reset() {
   contactForm.reset();
+}
+
+function duplicateContactCheck(data) {
+  for (let i = 0; i < allContacts.length; i++) {
+    if (data.name === allContacts[i].name || data.number === allContacts[i].number) {
+
+      // Duplicate Contact Alert
+      let duplicateContactElement = document.getElementById("duplicateContactToast");
+      let duplicateContactToast = new bootstrap.Toast(duplicateContactElement, {
+        delay: 1000
+      });
+      duplicateContactToast.show();
+
+      return true;
+    }
+  }
+  return false;
 }
 
 function getLocalStorageData() {
