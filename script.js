@@ -152,7 +152,7 @@ container.innerHTML = `
           
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary" onClick="editContact()">Save changes</button>
+            <button type="button" class="btn btn-primary" onClick="editContact()" data-bs-dismiss="modal">Save changes</button>
           </div>
         </div>
       </div>
@@ -171,6 +171,7 @@ window.onload = () => {
 };
 
 let allContacts = [];
+let indexToBeUpdated;
 
 // Target Form Element
 const contactForm = document.getElementById("createContactForm");
@@ -234,12 +235,17 @@ function loadTable(data) {
     <tr>
       <td>${data[i].name}</td>
       <td>${data[i].number}</td>
-      <td><button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
+      <td><button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick="updateDataIndex(${i})">
         <i class="fa fa-pencil-square" aria-hidden="true"></i>
       </button> &nbsp; &nbsp;
       <button class="btn" id="deleteBtn" onClick="deleteContactAlert('${data[i].number}')"><i class="fa fa-trash" aria-hidden="true"></i></button></td>
     </tr>`;
   }
+}
+
+function updateDataIndex(value) {
+  console.log("To be edited Index value", value)
+  indexToBeUpdated = value;
 }
 
 function editContact() {
@@ -267,8 +273,20 @@ function editContact() {
   }
 
   else if (duplicateContactCheck(editContactFormDataObj) == false) {
-    console.log("Edit Function");
-  };
+    console.log("To be updated Values", editContactFormDataObj.name, editContactFormDataObj.number);
+    allContacts[indexToBeUpdated].name = editContactFormDataObj.name;
+    allContacts[indexToBeUpdated].number = editContactFormDataObj.number;
+
+
+    contactEntries.innerHTML = ``; // Reset Table DOM
+    loadTable(allContacts);
+
+    localStorage.clear();
+    for (let i = 0; i < allContacts.length; i++) {
+      window.localStorage.setItem(allContacts[i].number, allContacts[i].name);
+    }
+
+  }
 
 }
 
