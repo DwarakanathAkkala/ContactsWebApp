@@ -103,3 +103,8 @@ input[type=number] {
 #closeBtn {
     background-color:#3FC1C9 !important;
 }
+
+.toast-container.position-fixed.top-50.start-50 {
+    z-index: 1111 !important;
+}
+

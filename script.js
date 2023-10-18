@@ -97,7 +97,7 @@ container.innerHTML = `
 
 
     <!--Contact Successful Delete Toast-->
-    <div class="toast-container position-fixed top-50 start-50 translate-middle" style="z-index: 11">
+    <div class="toast-container position-fixed top-50 start-50 translate-middle" >
       <div id="deleteToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
         <div class="toast-header">
           <strong class="me-auto">Contact deleted Successfully</strong>
@@ -110,7 +110,7 @@ container.innerHTML = `
     </div>
 
     <!--Duplicate Contact Toast-->
-    <div class="toast-container position-fixed top-50 start-50 translate-middle" style="z-index: 11">
+    <div class="toast-container position-fixed top-50 start-50 translate-middle">
       <div id="duplicateContactToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
         <div class="toast-header">
           <strong class="me-auto">Oops... Duplicate Contact</strong>
@@ -123,7 +123,7 @@ container.innerHTML = `
     </div>
 
     <!-- Edit Contact Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="exampleModal" aria-labelledby="exampleModalLabel" aria-hidden="true" >
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">Edit Contact</h1>
@@ -152,7 +152,7 @@ container.innerHTML = `
           
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary" onClick="editContact()" >Save changes</button>
+            <button type="button" class="btn btn-primary" onClick="editContact()">Save changes</button>
           </div>
         </div>
       </div>
