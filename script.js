@@ -214,7 +214,7 @@ function submitForm() {
       validToast.show(); // Activate Valid Toast (Success Message)
       contactForm.reset(); // Reset Form
       contactForm.classList.remove("was-validated"); // Remove Bootstrap Validation CSS
-      document.getElementById("tableContainer").scrollIntoView(); // Move to Table
+      // document.getElementById("tableContainer").scrollIntoView(); // Move to Table
     }
   }
 };
