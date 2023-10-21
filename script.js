@@ -255,7 +255,7 @@ function loadTable(data) {
     <tr>
       <td>${data[i].name}</td>
       <td>${data[i].number}</td>
-      <td><button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick="updateDataID('${data[i].id}')">
+      <td><button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick="updateDataID('${data[i].id}', '${data[i].name}', '${data[i].number}')">
         <i class="fa fa-pencil-square" aria-hidden="true"></i>
       </button> &nbsp; &nbsp;
       <button class="btn" id="deleteBtn" onClick="deleteContactAlert('${data[i].id}')"><i class="fa fa-trash" aria-hidden="true"></i></button></td>
@@ -263,9 +263,11 @@ function loadTable(data) {
   }
 }
 
-function updateDataID(id) {
+function updateDataID(id, name, number) {
   console.log("To be edited Index value", id);
   idToBeUpdated = id;
+  document.getElementById('editConFormName').value = name;
+  document.getElementById('editConFormNumber').value = number;
 }
 
 async function editContact() {
