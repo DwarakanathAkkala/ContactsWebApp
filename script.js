@@ -13,9 +13,7 @@ container.innerHTML = `
                         <label for="name" class="mb-2">Name</label>
                         <input id="name" class="form-control" name="name" type="text" required placeholder="Enter Name" required>
                         <div class="invalid-feedback">Please Enter Valid Name</div>
-                    </div>
-
-                    
+                    </div> 
                 </div>
 
                 <div class="mb-3 row">
@@ -26,20 +24,24 @@ container.innerHTML = `
                     </div>
                 </div>
 
-                </div>
-
                 <div class="d-grid gap-2 mb-3 d-md-flex justify-content-md-center">
                     <button class="btn btn-primary" id="resetBtn" type="reset" onclick=reset()>Reset</button>
                     <button class="btn btn-primary" id="submit" type="button" onclick="submitForm()">Submit</button>
                 </div>
-
             </form>  
         </div>
     </div>
 
     <h1>Contacts Data</h1>
     <h6 id="tableDescription">Please submit an entry to get the table data.</h6>
-    <div class="table-responsive-lg" id="tableContainer">
+    
+    <div class="row justify-content-md-center" id="searchInput">
+      <div class="col-6">
+          <input class="form-control form-control-lg" type="text" id="searchInputText" onkeyup="search(event)" placeholder="Search Contacts" >
+      </div>
+    </div>
+    
+    <div class="table-responsive-sm" id="tableContainer">
         <table class="table table-hover">
             <thead>
                 <tr>
@@ -53,6 +55,8 @@ container.innerHTML = `
             </tbody>
         </table>
     </div>
+
+    <h1 id="noContacts">No Contacts found</h1>
 
     <!--Invalid Toast-->
     <div class="toast-container position-fixed top-50 end-0" style="z-index: 11">
@@ -264,7 +268,6 @@ function loadTable(data) {
 }
 
 function updateDataID(id, name, number) {
-  console.log("To be edited Index value", id);
   idToBeUpdated = id;
   document.getElementById('editConFormName').value = name;
   document.getElementById('editConFormNumber').value = number;
@@ -419,4 +422,29 @@ async function getAirTableData() {
   // }
 
   loadTable(allContacts); // Display Data
+}
+
+
+function search(event) {
+
+  document.getElementById('tableContainer').style.display = "block";
+  document.getElementById('noContacts').style.display = "none";
+  let searchStr = event.target.value;
+  let filteredArr = [];
+  if (searchStr) {
+    contactEntries.innerHTML = ``;
+    filteredArr = allContacts.filter((arr) => (arr.name.match(searchStr) || arr.number.match(searchStr)));
+
+    if (filteredArr.length > 0) {
+      loadTable(filteredArr)
+    }
+    else if (filteredArr.length == 0) {
+      document.getElementById('tableContainer').style.display = "none";
+      document.getElementById('noContacts').style.display = "block";
+    }
+  }
+  else {
+    contactEntries.innerHTML = ``;
+    loadTable(allContacts);
+  }
 }
