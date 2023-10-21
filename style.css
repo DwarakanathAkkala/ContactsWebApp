@@ -5,12 +5,12 @@ body {
     background-color: #364F6B;
 }
 
-.card {
+.card,.modal-content {
     margin: 5%;
     background-color: #3FC1C9;
 }
 
-p, label {
+p, label, .modal-header {
     color: #F5F5F5;
 }
 
