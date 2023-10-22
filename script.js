@@ -232,7 +232,7 @@ async function addData(dataObj) {
   await fetch('https://api.airtable.com/v0/appPLZ9OcsUMRfOMr/Contacts', {
     method: 'POST',
     headers: {
-      Authorization: 'Bearer patswudjUsPEvI1SM.a2ba5e787808d9d3d90dc4c1ae74fe00b852d45af71fc36b262b071e5c8ed50e',
+      Authorization: 'Bearer patswudjUsPEvI1SM.14257e23bb78e79fb3f95c85c65113e16aced3743e5220ad008269a1880edc2c',
       "Content-Type": 'application/json',
     },
     body: JSON.stringify({
@@ -254,6 +254,7 @@ async function addData(dataObj) {
 
 // Load Table
 function loadTable(data) {
+  console.log("Load Table", data)
   for (let i = 0; i < data.length; i++) {
     contactEntries.innerHTML += `
     <tr>
@@ -268,6 +269,7 @@ function loadTable(data) {
 }
 
 function updateDataID(id, name, number) {
+  console.log("Update Data")
   idToBeUpdated = id;
   document.getElementById('editConFormName').value = name;
   document.getElementById('editConFormNumber').value = number;
@@ -305,7 +307,7 @@ async function editContact() {
     await fetch('https://api.airtable.com/v0/appPLZ9OcsUMRfOMr/Contacts/' + idToBeUpdated, {
       method: 'PATCH',
       headers: {
-        Authorization: 'Bearer patswudjUsPEvI1SM.a2ba5e787808d9d3d90dc4c1ae74fe00b852d45af71fc36b262b071e5c8ed50e',
+        Authorization: 'Bearer patswudjUsPEvI1SM.14257e23bb78e79fb3f95c85c65113e16aced3743e5220ad008269a1880edc2c',
         "Content-Type": 'application/json',
       },
       body: JSON.stringify({
@@ -347,7 +349,7 @@ async function deleteContact() {
   //window.localStorage.removeItem(numberToBeDeleted);
   await fetch('https://api.airtable.com/v0/appPLZ9OcsUMRfOMr/Contacts/' + numberToBeDeleted, {
     method: 'DELETE',
-    headers: { Authorization: 'Bearer patswudjUsPEvI1SM.a2ba5e787808d9d3d90dc4c1ae74fe00b852d45af71fc36b262b071e5c8ed50e' }
+    headers: { Authorization: 'Bearer patswudjUsPEvI1SM.14257e23bb78e79fb3f95c85c65113e16aced3743e5220ad008269a1880edc2c' }
   })
 
   contactEntries.innerHTML = ``;
@@ -399,10 +401,11 @@ async function getAirTableData() {
 
   await fetch('https://api.airtable.com/v0/appPLZ9OcsUMRfOMr/Contacts', {
     method: 'GET',
-    headers: { Authorization: 'Bearer patswudjUsPEvI1SM.a2ba5e787808d9d3d90dc4c1ae74fe00b852d45af71fc36b262b071e5c8ed50e' }
+    headers: { Authorization: 'Bearer patswudjUsPEvI1SM.14257e23bb78e79fb3f95c85c65113e16aced3743e5220ad008269a1880edc2c' }
   })
     .then(resp => resp.json())
     .then((data) => {
+      console.log(data)
       for (let i = 0; i < data.records.length; i++) {
         let tempArr = []; // Using tempArr array to get the data stored in AirTable
         tempArr.id = data.records[i].id;
