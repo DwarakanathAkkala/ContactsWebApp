@@ -56,6 +56,7 @@ container.innerHTML = `
         </table>
     </div>
 
+    <h1 id="loadingContacts">Loading Contacts...</h1>
     <h1 id="noContacts">No Contacts found</h1>
 
     <!--Invalid Toast-->
@@ -396,6 +397,8 @@ function duplicateContactCheck(data) {
 
 async function getAirTableData() {
   allContacts = [];
+  document.getElementById('tableContainer').style.display = "none";
+  document.getElementById('loadingContacts').style.display = "block";
 
   await fetch('https://api.airtable.com/v0/appPLZ9OcsUMRfOMr/Contacts', {
     method: 'GET',
@@ -412,6 +415,9 @@ async function getAirTableData() {
         allContacts.push(tempArr);
       }
     })
+
+  document.getElementById('tableContainer').style.display = "block";
+  document.getElementById('loadingContacts').style.display = "none";
 
   // for (let i = 0; i < localStorage.length; i++) {
   //   let tempArr = []; // Using tempArr array to get the data stored in local storage
