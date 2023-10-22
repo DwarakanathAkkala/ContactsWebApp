@@ -429,11 +429,11 @@ function search(event) {
 
   document.getElementById('tableContainer').style.display = "block";
   document.getElementById('noContacts').style.display = "none";
-  let searchStr = event.target.value;
+  let searchStr = event.target.value.toLowerCase();
   let filteredArr = [];
   if (searchStr) {
     contactEntries.innerHTML = ``;
-    filteredArr = allContacts.filter((arr) => (arr.name.match(searchStr) || arr.number.match(searchStr)));
+    filteredArr = allContacts.filter((arr) => (arr.name.toLowerCase().match(searchStr) || arr.number.match(searchStr)));
 
     if (filteredArr.length > 0) {
       loadTable(filteredArr)
