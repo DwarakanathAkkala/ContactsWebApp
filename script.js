@@ -122,7 +122,7 @@ container.innerHTML = `
           <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
         </div>
         <div class="toast-body bg-success text-white">
-          Please check the contacts
+          Please check the contacts 
         </div>
       </div>
     </div>
@@ -366,20 +366,26 @@ function reset() {
   contactForm.reset();
 }
 
+
+
 function duplicateContactCheck(data) {
+  // Duplicate Contact Alert
+  let duplicateContactElement = document.getElementById("duplicateContactToast");
+  let duplicateContactToast = new bootstrap.Toast(duplicateContactElement, {
+    delay: 1000
+  });
+
   for (let i = 0; i < allContacts.length; i++) {
+
     // Check for duplicates in the whole data
-    if (!data.id && (data.name === allContacts[i].name || data.number === allContacts[i].number)) {
+    if (!data.id) {
 
-      // Duplicate Contact Alert
-      let duplicateContactElement = document.getElementById("duplicateContactToast");
-      let duplicateContactToast = new bootstrap.Toast(duplicateContactElement, {
-        delay: 1000
-      });
-      duplicateContactToast.show();
-
+      (data.name.toLowerCase() === allContacts[i].name.toLowerCase()) ? (duplicateVariable = "Name", duplicateContactToast.show()) :
+        (data.number == allContacts[i].number) ? (duplicateVariable = "Number", duplicateContactToast.show()) :
+          (duplicateVariable = "", duplicateContactToast.show());
       return true;
     }
+
     // Check for duplicates excluding the ToBeUpdated Contact
     else if (data.id && data.id != allContacts[i].id && (data.name === allContacts[i].name || data.number === allContacts[i].number)) {
       // Duplicate Contact Alert
