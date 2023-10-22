@@ -114,6 +114,32 @@ container.innerHTML = `
       </div>
     </div>
 
+    <!--Duplicate Name Toast-->
+    <div class="toast-container position-fixed top-50 start-50 translate-middle">
+      <div id="duplicateNameToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+          <strong class="me-auto">Oops... Duplicate Contact</strong>
+          <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body bg-success text-white">
+          Contact Name already exists. 
+        </div>
+      </div>
+    </div>
+
+    <!--Duplicate Number Toast-->
+    <div class="toast-container position-fixed top-50 start-50 translate-middle">
+      <div id="duplicateNumberToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+          <strong class="me-auto">Oops... Duplicate Contact</strong>
+          <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body bg-success text-white">
+          Contact Number already exists.
+        </div>
+      </div>
+    </div>
+
     <!--Duplicate Contact Toast-->
     <div class="toast-container position-fixed top-50 start-50 translate-middle">
       <div id="duplicateContactToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
@@ -122,7 +148,7 @@ container.innerHTML = `
           <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
         </div>
         <div class="toast-body bg-success text-white">
-          Please check the contacts 
+          Contact with same Name and Number already exists.
         </div>
       </div>
     </div>
@@ -369,31 +395,39 @@ function reset() {
 
 
 function duplicateContactCheck(data) {
+
+  let duplicateNameElement = document.getElementById("duplicateNameToast");
+  let duplicateNameToast = new bootstrap.Toast(duplicateNameElement, {
+    delay: 800
+  });
+
+  let duplicateNumberElement = document.getElementById("duplicateNumberToast");
+  let duplicateNumberToast = new bootstrap.Toast(duplicateNumberElement, {
+    delay: 800
+  });
+
   // Duplicate Contact Alert
   let duplicateContactElement = document.getElementById("duplicateContactToast");
   let duplicateContactToast = new bootstrap.Toast(duplicateContactElement, {
-    delay: 1000
+    delay: 800
   });
 
   for (let i = 0; i < allContacts.length; i++) {
 
     // Check for duplicates in the whole data
-    if (!data.id) {
+    if (!data.id && (data.name.toLowerCase() === allContacts[i].name.toLowerCase() || data.number === allContacts[i].number)) {
 
-      (data.name.toLowerCase() === allContacts[i].name.toLowerCase()) ? (duplicateVariable = "Name", duplicateContactToast.show()) :
-        (data.number == allContacts[i].number) ? (duplicateVariable = "Number", duplicateContactToast.show()) :
-          (duplicateVariable = "", duplicateContactToast.show());
+      (data.name === allContacts[i].name && data.number === allContacts[i].number) ? duplicateContactToast.show() :
+        (data.number === allContacts[i].number) ? duplicateNumberToast.show() :
+          (duplicateNameToast.show())
       return true;
     }
 
     // Check for duplicates excluding the ToBeUpdated Contact
-    else if (data.id && data.id != allContacts[i].id && (data.name === allContacts[i].name || data.number === allContacts[i].number)) {
-      // Duplicate Contact Alert
-      let duplicateContactElement = document.getElementById("duplicateContactToast");
-      let duplicateContactToast = new bootstrap.Toast(duplicateContactElement, {
-        delay: 1000
-      });
-      duplicateContactToast.show();
+    else if (data.id && data.id != allContacts[i].id && (data.name.toLowerCase() === allContacts[i].name.toLowerCase() || data.number === allContacts[i].number)) {
+      (data.name === allContacts[i].name && data.number === allContacts[i].number) ? duplicateContactToast.show() :
+        (data.number === allContacts[i].number) ? duplicateNumberToast.show() :
+          (duplicateNameToast.show())
 
       return true;
     }
