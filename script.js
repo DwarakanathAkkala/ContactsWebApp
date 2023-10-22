@@ -1,5 +1,3 @@
-import { config } from '/config.js';
-
 let container = document.createElement("div");
 container.setAttribute("class", "container");
 container.innerHTML = `
@@ -234,7 +232,7 @@ async function addData(dataObj) {
   await fetch('https://api.airtable.com/v0/appPLZ9OcsUMRfOMr/Contacts', {
     method: 'POST',
     headers: {
-      Authorization: 'Bearer ' + config.SECRET_KEY,
+      Authorization: 'Bearer patswudjUsPEvI1SM.a2ba5e787808d9d3d90dc4c1ae74fe00b852d45af71fc36b262b071e5c8ed50e',
       "Content-Type": 'application/json',
     },
     body: JSON.stringify({
@@ -307,7 +305,7 @@ async function editContact() {
     await fetch('https://api.airtable.com/v0/appPLZ9OcsUMRfOMr/Contacts/' + idToBeUpdated, {
       method: 'PATCH',
       headers: {
-        Authorization: 'Bearer ' + config.SECRET_KEY,
+        Authorization: 'Bearer patswudjUsPEvI1SM.a2ba5e787808d9d3d90dc4c1ae74fe00b852d45af71fc36b262b071e5c8ed50e',
         "Content-Type": 'application/json',
       },
       body: JSON.stringify({
@@ -349,7 +347,7 @@ async function deleteContact() {
   //window.localStorage.removeItem(numberToBeDeleted);
   await fetch('https://api.airtable.com/v0/appPLZ9OcsUMRfOMr/Contacts/' + numberToBeDeleted, {
     method: 'DELETE',
-    headers: { Authorization: 'Bearer ' + config.SECRET_KEY }
+    headers: { Authorization: 'Bearer patswudjUsPEvI1SM.a2ba5e787808d9d3d90dc4c1ae74fe00b852d45af71fc36b262b071e5c8ed50e' }
   })
 
   contactEntries.innerHTML = ``;
@@ -401,7 +399,7 @@ async function getAirTableData() {
 
   await fetch('https://api.airtable.com/v0/appPLZ9OcsUMRfOMr/Contacts', {
     method: 'GET',
-    headers: { Authorization: 'Bearer ' + config.SECRET_KEY }
+    headers: { Authorization: 'Bearer patswudjUsPEvI1SM.a2ba5e787808d9d3d90dc4c1ae74fe00b852d45af71fc36b262b071e5c8ed50e' }
   })
     .then(resp => resp.json())
     .then((data) => {
