@@ -254,7 +254,6 @@ async function addData(dataObj) {
 
 // Load Table
 function loadTable(data) {
-  console.log("Load Table", data)
   for (let i = 0; i < data.length; i++) {
     contactEntries.innerHTML += `
     <tr>
@@ -269,7 +268,6 @@ function loadTable(data) {
 }
 
 function updateDataID(id, name, number) {
-  console.log("Update Data")
   idToBeUpdated = id;
   document.getElementById('editConFormName').value = name;
   document.getElementById('editConFormNumber').value = number;
@@ -300,7 +298,7 @@ async function editContact() {
   }
 
   else if (duplicateContactCheck(editContactFormDataObj) == false) {
-    console.log("To be updated Values", editContactFormDataObj.name, editContactFormDataObj.number);
+    // console.log("To be updated Values", editContactFormDataObj.name, editContactFormDataObj.number);
     // allContacts[indexToBeUpdated].name = editContactFormDataObj.name;
     // allContacts[indexToBeUpdated].number = editContactFormDataObj.number;
 
@@ -405,7 +403,6 @@ async function getAirTableData() {
   })
     .then(resp => resp.json())
     .then((data) => {
-      console.log(data)
       for (let i = 0; i < data.records.length; i++) {
         let tempArr = []; // Using tempArr array to get the data stored in AirTable
         tempArr.id = data.records[i].id;
