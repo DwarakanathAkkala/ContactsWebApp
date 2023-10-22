@@ -207,6 +207,15 @@ let idToBeUpdated;
 // Target Form Element
 const contactForm = document.getElementById("createContactForm");
 
+// "Enter" Key Event Listeners for forms
+document.getElementById('name').onkeydown = (evt) => {
+  if (evt.keyCode === 13) submitForm();
+}
+
+document.getElementById('editConFormName').onkeydown = (evt) => {
+  if (evt.keyCode === 13) editContact();
+}
+
 function submitForm() {
   // Activate Bootstrap Validations
   contactForm.classList.add("was-validated");
@@ -312,10 +321,11 @@ async function editContact() {
   const editContactFormData = new FormData(editContactForm);
   const editContactFormDataObj = Object.fromEntries(editContactFormData.entries());
   editContactFormDataObj.id = idToBeUpdated;
+
   // Create Bootstrap Toast Trigger
   let invalidElement = document.getElementById("invalidToast");
   let invalidToast = new bootstrap.Toast(invalidElement, {
-    delay: 500
+    delay: 800
   });
 
   // Duplicate Contact Check
